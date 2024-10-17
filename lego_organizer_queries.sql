@@ -1,21 +1,23 @@
--- Query 1: Find sets that have a word or phrase in their description
-SELECT * 
-FROM LEGO_Sets
-WHERE name LIKE '%word_or_phrase%';
 
--- Query 2: Sort by sets with the highest piece count
-SELECT s.set_id, s.name, SUM(sp.quantity) AS piece_count
-FROM LEGO_Sets s
-JOIN Set_Parts sp ON s.set_id = sp.set_id
-GROUP BY s.set_id, s.name
-ORDER BY piece_count DESC;
+-- lego_organizer_queries.sql
 
--- Query 3: Show only sets that belong to a specific theme
-SELECT * 
+-- 1. Find sets that have a word or phrase in their description
+SELECT *
 FROM LEGO_Sets
-WHERE theme = 'specific_theme';
+WHERE description LIKE '%castle%';  -- Replace 'castle' with the desired word/phrase
 
--- Query 4: Paginate the list of sets, 4 sets at a time
-SELECT * 
+-- 2. Sort by sets with the highest piece count
+-- Note: Assuming there is a piece_count column; if not, add one to the LEGO_Sets table.
+SELECT *
 FROM LEGO_Sets
-LIMIT 4 OFFSET (page_number - 1) * 4;
+ORDER BY piece_count DESC;  -- Replace piece_count with the actual column name if it exists
+
+-- 3. Show only sets that belong to a specific theme
+SELECT *
+FROM LEGO_Sets
+WHERE theme = 'Disney';  -- Replace 'Disney' with the desired theme
+
+-- 4. Pagination query to show sets, 4 at a time
+SELECT *
+FROM LEGO_Sets
+LIMIT 4 OFFSET 0;  -- Replace 0 with the appropriate offset for pagination (0 for the first 4, 4 for the next 4, etc.)
